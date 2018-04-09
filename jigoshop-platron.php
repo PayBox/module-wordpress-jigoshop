@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Jigoshop Platron
- * Plugin URI: http://paybox.kz/
+ * Plugin URI: http://paybox.money/
  * Description: Gateway platron for jigoshop.
  * Author: lashnev
  * Version: 1.0.0
@@ -73,7 +73,7 @@ function jigoplatron_gateway_load() {
             $this->id             = 'platron';
             $this->icon           = plugins_url( 'images/paybox.png', __FILE__ );
             $this->has_fields     = false;
-            $this->payment_url    = 'https://paybox.kz/payment.php';
+            $this->payment_url    = 'https://api.paybox.money/payment.php';
             $this->method_title   = __( 'platron', 'jigoplatron' );
 
             // Define user set variables.
@@ -165,7 +165,7 @@ function jigoplatron_gateway_load() {
             $defaults[] = array(
                 'name'      => __( 'Merchant id', 'jigoplatron' ),
                 'desc'      => '',
-                'tip'       => __( 'See it on <a target="_blank" href="https://www.paybox.kz/merchants.php">platron</a>.', 'jigoplatron' ),
+                'tip'       => __( 'See it on <a target="_blank" href="https://my.paybox.money">platron</a>.', 'jigoplatron' ),
                 'id'        => 'jigoplatron_merchant_id',
                 'std'       => '',
                 'type'      => 'text'
@@ -174,7 +174,7 @@ function jigoplatron_gateway_load() {
             $defaults[] = array(
                 'name'      => __( 'Secret key', 'jigoplatron' ),
                 'desc'      => '',
-                'tip'       => __( 'Used for sign. See it on <a target="_blank" href="https://www.paybox.kz/merchants.php">platron</a>.', 'jigoplatron' ),
+                'tip'       => __( 'Used for sign. See it on <a target="_blank" href="https://my.paybox.money">platron</a>.', 'jigoplatron' ),
                 'id'        => 'jigoplatron_secret_key',
                 'std'       => '',
                 'type'      => 'text'
@@ -188,7 +188,7 @@ function jigoplatron_gateway_load() {
                 'std'       => '0',
                 'type'      => 'text'
             );
-			
+
 			$defaults[] = array(
                 'name'      => __( 'Test mode', 'jigoplatron' ),
                 'desc'      => '',
@@ -225,12 +225,12 @@ function jigoplatron_gateway_load() {
 
 			// Filter redirect page.
 			$my_account_page_id = apply_filters( 'jigoshop_get_checkout_redirect_page_id', jigoshop_get_page_id( 'myaccount' ) );
-			
+
             $order = new jigoshop_order( $order_id );
 			$strCurrency = Jigoshop_Base::get_options()->get_option( 'jigoshop_currency' );
 			if($strCurrency == 'RUR')
 				$strCurrency = 'RUB';
-			
+
 			$strDescription = '';
 			foreach($order->items as $arrItem){
 				$strDescription .= $arrItem['name'];
@@ -260,13 +260,13 @@ function jigoplatron_gateway_load() {
 			preg_match_all("/\d/", $order->billing_phone, $array);
 			$strPhone = implode('',$array[0]);
 			if(!empty($strPhone))
-			$form_fields['pg_user_phone'] = $strPhone;	
+			$form_fields['pg_user_phone'] = $strPhone;
 
 			if(preg_match('/^.+@.+\..+$/', $order->billing_email)){
 				$form_fields['pg_user_email'] = $order->billing_email;
 				$form_fields['pg_user_contact_email'] = $order->billing_email;
 			}
-			
+
 			$form_fields['pg_sig'] = PG_Signature::make('payment.php', $form_fields, $this->secret_key);
             jigoshop_log( 'Payment arguments for order #' . $order_id . ': ' . print_r( $form_fields, true ) );
 
@@ -347,7 +347,7 @@ function jigoplatron_gateway_load() {
 
             echo $message;
         }
-		
+
 		public function platron_callback(){
 			if(!empty($_POST))
 				$arrRequest = $_POST;
@@ -360,7 +360,7 @@ function jigoplatron_gateway_load() {
 
 			$objOrder = new jigoshop_order( $arrRequest['pg_order_id'] );
 			$arrStatuses = jigoshop_order::get_order_statuses_and_names();
-			
+
 			$arrResponse = array();
 			$aGoodCheckStatuses = array('new','pending','processing');
 			$aGoodResultStatuses = array('new','pending','processing','completed');
@@ -369,10 +369,10 @@ function jigoplatron_gateway_load() {
 				$arrRequest['type'] = 'result';
 			else
 				$arrRequest['type'] = 'check';
-				
+
 			switch($arrRequest['type']){
 				case 'check':
-					$bCheckResult = 1;			
+					$bCheckResult = 1;
 					if(empty($objOrder) || !in_array($objOrder->status, $aGoodCheckStatuses)){
 						$bCheckResult = 0;
 						$error_desc = 'Order status '.$arrStatuses[$objOrder->status].' or deleted order';
@@ -382,7 +382,7 @@ function jigoplatron_gateway_load() {
 						$error_desc = 'Wrong amount';
 					}
 
-					$arrResponse['pg_salt']              = $arrRequest['pg_salt']; 
+					$arrResponse['pg_salt']              = $arrRequest['pg_salt'];
 					$arrResponse['pg_status']            = $bCheckResult ? 'ok' : 'error';
 					$arrResponse['pg_error_description'] = $bCheckResult ?  ""  : $error_desc;
 					$arrResponse['pg_sig']				 = PG_Signature::make($thisScriptName, $arrResponse, $this->secret_key);
@@ -394,7 +394,7 @@ function jigoplatron_gateway_load() {
 					$objResponse->addChild('pg_sig', $arrResponse['pg_sig']);
 					break;
 
-				case 'result':	
+				case 'result':
 					if(intval($objOrder->order_total) != intval($arrRequest['pg_amount'])){
 						$strResponseDescription = 'Wrong amount';
 						if($arrRequest['pg_can_reject'] == 1)
@@ -402,7 +402,7 @@ function jigoplatron_gateway_load() {
 						else
 							$strResponseStatus = 'error';
 					}
-					elseif((empty($objOrder) || !in_array($objOrder->status, $aGoodResultStatuses)) && 
+					elseif((empty($objOrder) || !in_array($objOrder->status, $aGoodResultStatuses)) &&
 							!($arrRequest['pg_result'] == 0 && $objOrder->status == 'failed')){
 						$strResponseDescription = 'Order status '.$arrStatuses[$objOrder->status].' or deleted order';
 						if($arrRequest['pg_can_reject'] == 1)

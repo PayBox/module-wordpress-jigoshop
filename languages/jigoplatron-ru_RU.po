@@ -29,7 +29,7 @@ msgstr ""
 #. translators: plugin header field 'PluginURI'
 #: jigoshop-platron.php:0
 #@ jigoplatron
-msgid "http://paybox.kz/"
+msgid "http://paybox.money/"
 msgstr ""
 
 #. translators: plugin header field 'Description'
@@ -120,8 +120,8 @@ msgstr "Номер магазина"
 
 #: jigoshop-platron.php:168
 #@ jigoplatron
-msgid "See it on <a target=\"_blank\" href=\"https://paybox.kz/merchants.php\">PayBox</a>."
-msgstr "Эту настройку можно найти <a target=\"_blank\" href=\"https://paybox.kz/merchants.php\">здесь</a>."
+msgid "See it on <a target=\"_blank\" href=\"https://my.paybox.money\">PayBox</a>."
+msgstr "Эту настройку можно найти <a target=\"_blank\" href=\"https://my.paybox.money\">здесь</a>."
 
 #: jigoshop-platron.php:175
 #@ jigoplatron
@@ -130,8 +130,8 @@ msgstr "Секретный ключ."
 
 #: jigoshop-platron.php:177
 #@ jigoplatron
-msgid "Used for sign. See it on <a target=\"_blank\" href=\"https://paybox.kz/merchants.php\">PayBox</a>."
-msgstr "Используется для подписи запросов. Эту настройку можно найти <a target=\"_blank\" href=\"https://paybox.kz/merchants.php\">здесь</a>."
+msgid "Used for sign. See it on <a target=\"_blank\" href=\"https://my.paybox.money\">PayBox</a>."
+msgstr "Используется для подписи запросов. Эту настройку можно найти <a target=\"_blank\" href=\"https://my.paybox.money\">здесь</a>."
 
 #: jigoshop-platron.php:184
 #@ jigoplatron
