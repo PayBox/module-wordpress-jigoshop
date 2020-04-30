@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Jigoshop Platron v1.0.0\n"
+"Project-Id-Version: Jigoshop paybox v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2014-08-17 20:25:09+0000\n"
@@ -21,152 +21,152 @@ msgstr ""
 "X-Textdomain-Support: yes"
 
 #. translators: plugin header field 'Name'
-#: jigoshop-platron.php:0
-#@ jigoplatron
-msgid "Jigoshop Platron"
+#: jigoshop-paybox.php:0
+#@ jigopaybox
+msgid "Jigoshop paybox"
 msgstr ""
 
 #. translators: plugin header field 'PluginURI'
-#: jigoshop-platron.php:0
-#@ jigoplatron
+#: jigoshop-paybox.php:0
+#@ jigopaybox
 msgid "http://paybox.money/"
 msgstr ""
 
 #. translators: plugin header field 'Description'
-#: jigoshop-platron.php:0
-#@ jigoplatron
-msgid "Gateway platron for jigoshop."
+#: jigoshop-paybox.php:0
+#@ jigopaybox
+msgid "Gateway paybox for jigoshop."
 msgstr ""
 
 #. translators: plugin header field 'Author'
-#: jigoshop-platron.php:0
-#@ jigoplatron
+#: jigoshop-paybox.php:0
+#@ jigopaybox
 msgid "lashnev"
 msgstr ""
 
 #. translators: plugin header field 'Version'
-#: jigoshop-platron.php:0
-#@ jigoplatron
+#: jigoshop-paybox.php:0
+#@ jigopaybox
 msgid "1.0.0"
 msgstr ""
 
-#: jigoshop-platron.php:19
-#@ jigoplatron
-msgid "Jigoshop platron Gateway depends on the last version of <a href=\"http://wordpress.org/extend/plugins/jigoshop/\">Jigoshop</a> to work!"
+#: jigoshop-paybox.php:19
+#@ jigopaybox
+msgid "Jigoshop paybox Gateway depends on the last version of <a href=\"http://wordpress.org/extend/plugins/jigoshop/\">Jigoshop</a> to work!"
 msgstr "Следите за последней версией Jigoshop <a href=\\\"http://wordpress.org/extend/plugins/jigoshop/\\\">Jigoshop</a>"
 
-#: jigoshop-platron.php:77
-#: jigoshop-platron.php:152
-#@ jigoplatron
-msgid "platron"
-msgstr "Платрон"
+#: jigoshop-paybox.php:77
+#: jigoshop-paybox.php:152
+#@ jigopaybox
+msgid "Paybox"
+msgstr "Paybox"
 
-#: jigoshop-platron.php:128
-#@ jigoplatron
-msgid "Platron"
-msgstr "Платрон"
+#: jigoshop-paybox.php:128
+#@ jigopaybox
+msgid "paybox"
+msgstr "Paybox"
 
-#: jigoshop-platron.php:130
-#@ jigoplatron
-msgid "Platron payment gate"
-msgstr "Платежный агрегатор Платрон"
+#: jigoshop-paybox.php:130
+#@ jigopaybox
+msgid "paybox payment gate"
+msgstr "Платежный агрегатор Paybox"
 
-#: jigoshop-platron.php:135
-#@ jigoplatron
-msgid "Enable platron"
-msgstr "Включить Платрон"
+#: jigoshop-paybox.php:135
+#@ jigopaybox
+msgid "Enable paybox"
+msgstr "Включить Paybox"
 
-#: jigoshop-platron.php:142
-#: jigoshop-platron.php:200
-#@ jigoplatron
+#: jigoshop-paybox.php:142
+#: jigoshop-paybox.php:200
+#@ jigopaybox
 msgid "No"
 msgstr "Нет"
 
-#: jigoshop-platron.php:143
-#: jigoshop-platron.php:201
-#@ jigoplatron
+#: jigoshop-paybox.php:143
+#: jigoshop-paybox.php:201
+#@ jigopaybox
 msgid "Yes"
 msgstr "Да"
 
-#: jigoshop-platron.php:148
-#@ jigoplatron
+#: jigoshop-paybox.php:148
+#@ jigopaybox
 msgid "Method Title"
 msgstr "Название метода оплаты"
 
-#: jigoshop-platron.php:150
-#@ jigoplatron
+#: jigoshop-paybox.php:150
+#@ jigopaybox
 msgid "This controls the title which the user sees during checkout."
 msgstr "Это название будет выводиться при оплате"
 
-#: jigoshop-platron.php:157
-#@ jigoplatron
+#: jigoshop-paybox.php:157
+#@ jigopaybox
 msgid "Description"
 msgstr "Описание"
 
-#: jigoshop-platron.php:159
-#@ jigoplatron
+#: jigoshop-paybox.php:159
+#@ jigopaybox
 msgid "This controls the description which the user sees during checkout."
 msgstr "Это название будет выводиться при оплате"
 
-#: jigoshop-platron.php:161
-#@ jigoplatron
-msgid "Pay via platron"
-msgstr "Оплатить через Платрон"
+#: jigoshop-paybox.php:161
+#@ jigopaybox
+msgid "Pay via paybox"
+msgstr "Оплатить через Paybox"
 
-#: jigoshop-platron.php:166
-#@ jigoplatron
+#: jigoshop-paybox.php:166
+#@ jigopaybox
 msgid "Merchant id"
 msgstr "Номер магазина"
 
-#: jigoshop-platron.php:168
-#@ jigoplatron
+#: jigoshop-paybox.php:168
+#@ jigopaybox
 msgid "See it on <a target=\"_blank\" href=\"https://my.paybox.money\">PayBox</a>."
 msgstr "Эту настройку можно найти <a target=\"_blank\" href=\"https://my.paybox.money\">здесь</a>."
 
-#: jigoshop-platron.php:175
-#@ jigoplatron
+#: jigoshop-paybox.php:175
+#@ jigopaybox
 msgid "Secret key"
 msgstr "Секретный ключ."
 
-#: jigoshop-platron.php:177
-#@ jigoplatron
+#: jigoshop-paybox.php:177
+#@ jigopaybox
 msgid "Used for sign. See it on <a target=\"_blank\" href=\"https://my.paybox.money\">PayBox</a>."
 msgstr "Используется для подписи запросов. Эту настройку можно найти <a target=\"_blank\" href=\"https://my.paybox.money\">здесь</a>."
 
-#: jigoshop-platron.php:184
-#@ jigoplatron
+#: jigoshop-paybox.php:184
+#@ jigopaybox
 msgid "Lifetime"
 msgstr "Время жизни счета"
 
-#: jigoshop-platron.php:186
-#@ jigoplatron
+#: jigoshop-paybox.php:186
+#@ jigopaybox
 msgid "Set minutes. For payment systems, which dont use check request. 0 - not set. Max 7 day"
 msgstr "Устанавливается в минутах. Для ПС, которые не поддерживают проверку заказа. 0 - не учитывается. Максимально 7 дней"
 
-#: jigoshop-platron.php:193
-#@ jigoplatron
+#: jigoshop-paybox.php:193
+#@ jigopaybox
 msgid "Test mode"
 msgstr "Тестовый режим"
 
-#: jigoshop-platron.php:195
-#@ jigoplatron
+#: jigoshop-paybox.php:195
+#@ jigopaybox
 msgid "Use it to test connection and integration"
 msgstr "Позволяет проверить интеграцию"
 
-#: jigoshop-platron.php:279
-#@ jigoplatron
+#: jigoshop-paybox.php:279
+#@ jigopaybox
 msgid "Pay"
 msgstr "Оплатить"
 
-#: jigoshop-platron.php:332
+#: jigoshop-paybox.php:332
 #, php-format
-#@ jigoplatron
-msgid "<strong>Gateway Disabled</strong> You should inform your merchant id in platron. %sClick here to configure!%s"
-msgstr "<strong>Метод оплаты выключен</strong> введите номер магазина platron. %sНажмите сюда для настройки!%s"
+#@ jigopaybox
+msgid "<strong>Gateway Disabled</strong> You should inform your merchant id in paybox. %sClick here to configure!%s"
+msgstr "<strong>Метод оплаты выключен</strong> введите номер магазина paybox. %sНажмите сюда для настройки!%s"
 
-#: jigoshop-platron.php:345
+#: jigoshop-paybox.php:345
 #, php-format
-#@ jigoplatron
-msgid "<strong>Gateway Disabled</strong> You should inform your secret key in platron. %sClick here to configure!%s"
-msgstr "<strong>Метод оплаты выключен</strong> введите секретный ключ platron. %sНажмите сюда для настройки!%s"
+#@ jigopaybox
+msgid "<strong>Gateway Disabled</strong> You should inform your secret key in paybox. %sClick here to configure!%s"
+msgstr "<strong>Метод оплаты выключен</strong> введите секретный ключ paybox. %sНажмите сюда для настройки!%s"
 

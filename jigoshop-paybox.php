@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Jigoshop Platron
+ * Plugin Name: Jigoshop Paybox
  * Plugin URI: http://paybox.money/
- * Description: Gateway platron for jigoshop.
+ * Description: Gateway paybox for jigoshop.
  * Author: lashnev
  * Version: 1.0.0
  * License: GPLv2 or later
- * Text Domain: jigoplatron
+ * Text Domain: jigopaybox
  * Domain Path: /languages/
  */
 
@@ -14,9 +14,9 @@ require_once('include/PG_Signature.php');
 /**
  * Jigoshop fallback notice.
  */
-function jigoplatron_jigoshop_fallback_notice() {
+function jigopaybox_jigoshop_fallback_notice() {
     $message = '<div class="error">';
-        $message .= '<p>' . __( 'Jigoshop platron Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/jigoshop/">Jigoshop</a> to work!' , 'jigoplatron' ) . '</p>';
+        $message .= '<p>' . __( 'Jigoshop paybox Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/jigoshop/">Jigoshop</a> to work!' , 'jigopaybox' ) . '</p>';
     $message .= '</div>';
 
     echo $message;
@@ -25,12 +25,12 @@ function jigoplatron_jigoshop_fallback_notice() {
 /**
  * Load functions.
  */
-add_action( 'plugins_loaded', 'jigoplatron_gateway_load', 0 );
+add_action( 'plugins_loaded', 'jigopaybox_gateway_load', 0 );
 
-function jigoplatron_gateway_load() {
+function jigopaybox_gateway_load() {
 
     if ( !class_exists( 'jigoshop_payment_gateway' ) ) {
-        add_action( 'admin_notices', 'jigoplatron_jigoshop_fallback_notice' );
+        add_action( 'admin_notices', 'jigopaybox_jigoshop_fallback_notice' );
 
         return;
     }
@@ -38,7 +38,7 @@ function jigoplatron_gateway_load() {
     /**
      * Load textdomain.
      */
-    load_plugin_textdomain( 'jigoplatron', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    load_plugin_textdomain( 'jigopaybox', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
     /**
      * Add the gateway to Jigoshop.
@@ -47,19 +47,19 @@ function jigoplatron_gateway_load() {
      * @param array $methods
      * @return array
      */
-    add_filter( 'jigoshop_payment_gateways', 'jigoplatron_add_gateway' );
+    add_filter( 'jigoshop_payment_gateways', 'jigopaybox_add_gateway' );
 
-    function jigoplatron_add_gateway( $methods ) {
-        $methods[] = 'platron_Gateway';
+    function jigopaybox_add_gateway( $methods ) {
+        $methods[] = 'paybox_Gateway';
         return $methods;
     }
 
     /**
-     * platron Gateway Class.
+     * paybox Gateway Class.
      *
-     * Built the platron method.
+     * Built the paybox method.
      */
-    class Platron_Gateway extends jigoshop_payment_gateway {
+    class Paybox_Gateway extends jigoshop_payment_gateway {
 
         /**
          * Constructor for the gateway.
@@ -70,25 +70,25 @@ function jigoplatron_gateway_load() {
 
             parent::__construct();
 
-            $this->id             = 'platron';
+            $this->id             = 'paybox';
             $this->icon           = plugins_url( 'images/paybox.png', __FILE__ );
             $this->has_fields     = false;
             $this->payment_url    = 'https://api.paybox.money/payment.php';
-            $this->method_title   = __( 'platron', 'jigoplatron' );
+            $this->method_title   = __( 'paybox', 'jigopaybox' );
 
             // Define user set variables.
-            $this->enabled		= Jigoshop_Base::get_options()->get_option( 'jigoplatron_enabled' );
-            $this->title		= Jigoshop_Base::get_options()->get_option( 'jigoplatron_title' );
-            $this->description	= Jigoshop_Base::get_options()->get_option( 'jigoplatron_description' );
-            $this->merchant_id	= Jigoshop_Base::get_options()->get_option( 'jigoplatron_merchant_id' );
-            $this->secret_key	= Jigoshop_Base::get_options()->get_option( 'jigoplatron_secret_key' );
-            $this->lifetime		= Jigoshop_Base::get_options()->get_option( 'jigoplatron_lifetime' );
-			$this->testmode		= Jigoshop_Base::get_options()->get_option( 'jigoplatron_testmode' );
+            $this->enabled		= Jigoshop_Base::get_options()->get_option( 'jigopaybox_enabled' );
+            $this->title		= Jigoshop_Base::get_options()->get_option( 'jigopaybox_title' );
+            $this->description	= Jigoshop_Base::get_options()->get_option( 'jigopaybox_description' );
+            $this->merchant_id	= Jigoshop_Base::get_options()->get_option( 'jigopaybox_merchant_id' );
+            $this->secret_key	= Jigoshop_Base::get_options()->get_option( 'jigopaybox_secret_key' );
+            $this->lifetime		= Jigoshop_Base::get_options()->get_option( 'jigopaybox_lifetime' );
+			$this->testmode		= Jigoshop_Base::get_options()->get_option( 'jigopaybox_testmode' );
 
             // Actions.
-            add_action( 'receipt_platron', array( &$this, 'receipt_page' ) );
+            add_action( 'receipt_paybox', array( &$this, 'receipt_page' ) );
             add_action( 'wp_head', array( &$this, 'css' ) );
-			add_action('jigoshop_api_js_gateway_platron', array($this, 'platron_callback'));
+			add_action('jigoshop_api_js_gateway_paybox', array($this, 'paybox_callback'));
 
             // Valid for use.
             // $this->enabled = ( 'yes' == $this->enabled ) && !empty( $this->merchant_id ) && !empty( $this->secret_key ) && $this->is_valid_for_use();
@@ -125,80 +125,80 @@ function jigoplatron_gateway_load() {
 
             // Define the Section name for the Jigoshop_Options.
             $defaults[] = array(
-                'name' => __( 'Platron', 'jigoplatron' ),
+                'name' => __( 'Paybox', 'jigopaybox' ),
                 'type' => 'title',
-                'desc' => __( 'Platron payment gate', 'jigoplatron' )
+                'desc' => __( 'Paybox payment gate', 'jigopaybox' )
             );
 
             // List each option in order of appearance with details.
             $defaults[] = array(
-                'name'      => __( 'Enable platron', 'jigoplatron' ),
+                'name'      => __( 'Enable paybox', 'jigopaybox' ),
                 'desc'      => '',
                 'tip'       => '',
-                'id'        => 'jigoplatron_enabled',
+                'id'        => 'jigopaybox_enabled',
                 'std'       => 'yes',
                 'type'      => 'checkbox',
                 'choices'   => array(
-                    'no'            => __( 'No', 'jigoplatron' ),
-                    'yes'           => __( 'Yes', 'jigoplatron' )
+                    'no'            => __( 'No', 'jigopaybox' ),
+                    'yes'           => __( 'Yes', 'jigopaybox' )
                 )
             );
 
             $defaults[] = array(
-                'name'      => __( 'Method Title', 'jigoplatron' ),
+                'name'      => __( 'Method Title', 'jigopaybox' ),
                 'desc'      => '',
-                'tip'       => __( 'This controls the title which the user sees during checkout.', 'jigoplatron' ),
-                'id'        => 'jigoplatron_title',
-                'std'       => __( 'platron', 'jigoplatron' ),
+                'tip'       => __( 'This controls the title which the user sees during checkout.', 'jigopaybox' ),
+                'id'        => 'jigopaybox_title',
+                'std'       => __( 'paybox', 'jigopaybox' ),
                 'type'      => 'text'
             );
 
             $defaults[] = array(
-                'name'      => __( 'Description', 'jigoplatron' ),
+                'name'      => __( 'Description', 'jigopaybox' ),
                 'desc'      => '',
-                'tip'       => __( 'This controls the description which the user sees during checkout.', 'jigoplatron' ),
-                'id'        => 'jigoplatron_description',
-                'std'       => __( 'Pay via platron', 'jigoplatron' ),
+                'tip'       => __( 'This controls the description which the user sees during checkout.', 'jigopaybox' ),
+                'id'        => 'jigopaybox_description',
+                'std'       => __( 'Pay via paybox', 'jigopaybox' ),
                 'type'      => 'longtext'
             );
 
             $defaults[] = array(
-                'name'      => __( 'Merchant id', 'jigoplatron' ),
+                'name'      => __( 'Merchant id', 'jigopaybox' ),
                 'desc'      => '',
-                'tip'       => __( 'See it on <a target="_blank" href="https://my.paybox.money">platron</a>.', 'jigoplatron' ),
-                'id'        => 'jigoplatron_merchant_id',
+                'tip'       => __( 'See it on <a target="_blank" href="https://my.paybox.money">paybox</a>.', 'jigopaybox' ),
+                'id'        => 'jigopaybox_merchant_id',
                 'std'       => '',
                 'type'      => 'text'
             );
 
             $defaults[] = array(
-                'name'      => __( 'Secret key', 'jigoplatron' ),
+                'name'      => __( 'Secret key', 'jigopaybox' ),
                 'desc'      => '',
-                'tip'       => __( 'Used for sign. See it on <a target="_blank" href="https://my.paybox.money">platron</a>.', 'jigoplatron' ),
-                'id'        => 'jigoplatron_secret_key',
+                'tip'       => __( 'Used for sign. See it on <a target="_blank" href="https://my.paybox.money">paybox</a>.', 'jigopaybox' ),
+                'id'        => 'jigopaybox_secret_key',
                 'std'       => '',
                 'type'      => 'text'
             );
 
             $defaults[] = array(
-                'name'      => __( 'Lifetime', 'jigoplatron' ),
+                'name'      => __( 'Lifetime', 'jigopaybox' ),
                 'desc'      => '',
-                'tip'       => __( 'Set minutes. For payment systems, which dont use check request. 0 - not set. Max 7 day', 'jigoplatron' ),
-                'id'        => 'jigoplatron_lifetime',
+                'tip'       => __( 'Set minutes. For payment systems, which dont use check request. 0 - not set. Max 7 day', 'jigopaybox' ),
+                'id'        => 'jigopaybox_lifetime',
                 'std'       => '0',
                 'type'      => 'text'
             );
 
 			$defaults[] = array(
-                'name'      => __( 'Test mode', 'jigoplatron' ),
+                'name'      => __( 'Test mode', 'jigopaybox' ),
                 'desc'      => '',
-                'tip'       => __( 'Use it to test connection and integration', 'jigoplatron' ),
-                'id'        => 'jigoplatron_testmode',
+                'tip'       => __( 'Use it to test connection and integration', 'jigopaybox' ),
+                'id'        => 'jigopaybox_testmode',
                 'std'       => 'yes',
                 'type'      => 'checkbox',
                 'choices'   => array(
-                    'no'            => __( 'No', 'jigoplatron' ),
-                    'yes'           => __( 'Yes', 'jigoplatron' )
+                    'no'            => __( 'No', 'jigopaybox' ),
+                    'yes'           => __( 'Yes', 'jigopaybox' )
                 )
             );
 
@@ -249,8 +249,8 @@ function jigoplatron_gateway_load() {
 				'pg_lifetime'		=> $this->lifetime*60, // в секундах
 				'pg_testing_mode'	=> ($this->testmode == 'yes') ? 1 : 0,
 				'pg_description'	=> mb_substr($strDescription, 0, 255, "UTF-8"),
-				'pg_check_url'		=> jigoshop_request_api::query_request('index.php?js-api=JS_Gateway_Platron', false),
-				'pg_result_url'		=> jigoshop_request_api::query_request('index.php?js-api=JS_Gateway_Platron', false),
+				'pg_check_url'		=> jigoshop_request_api::query_request('index.php?js-api=JS_Gateway_Paybox', false),
+				'pg_result_url'		=> jigoshop_request_api::query_request('index.php?js-api=JS_Gateway_Paybox', false),
 				'pg_request_method'	=> 'GET',
 				'pg_success_url'	=> add_query_arg( 'key', $order->order_key, add_query_arg( 'order', $order->id, get_permalink( $my_account_page_id ) ) ),
 				'pg_failure_url'	=> add_query_arg( 'key', $order->order_key, add_query_arg( 'order', $order->id, get_permalink( $my_account_page_id ) ) ),
@@ -274,20 +274,20 @@ function jigoplatron_gateway_load() {
 				$args_array[] = '<input type="hidden" name="'.esc_attr($strFieldName).'" value="'.esc_attr($strFieldValue).'" />';
 			}
 
-			return '<form action="'.esc_url($this->payment_url).'" method="POST" id="platron_payment_form">'."\n".
+			return '<form action="'.esc_url($this->payment_url).'" method="POST" id="paybox_payment_form">'."\n".
 				implode("\n", $args_array).
-				'<input type="submit" class="button alt" id="submit_platron_payment_form" value="'.__('Pay', 'jigoplatron').'" />'.
+				'<input type="submit" class="button alt" id="submit_paybox_payment_form" value="'.__('Pay', 'jigopaybox').'" />'.
 				'</form>'
 				.'<script type="text/javascript">
 				setTimeout(function () {
-					document.getElementById("platron_payment_form").submit();
+					document.getElementById("paybox_payment_form").submit();
 				}, 1000);
 				</script>'
 				;
         }
 
         /**
-         * Fix platron CSS.
+         * Fix paybox CSS.
          *
          * @return string Styles.
          */
@@ -329,7 +329,7 @@ function jigoplatron_gateway_load() {
          */
         public function merchant_id_missing_message() {
             $message = '<div class="error">';
-                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your merchant id in platron. %sClick here to configure!%s' , 'jigoplatron' ), '<a href="' . get_admin_url() . 'admin.php?page=jigoshop_settings&tab=расчет">', '</a>' ) . '</p>';
+                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your merchant id in paybox. %sClick here to configure!%s' , 'jigopaybox' ), '<a href="' . get_admin_url() . 'admin.php?page=jigoshop_settings&tab=расчет">', '</a>' ) . '</p>';
             $message .= '</div>';
 
             echo $message;
@@ -342,13 +342,13 @@ function jigoplatron_gateway_load() {
          */
         public function secret_key_missing_message() {
             $message = '<div class="error">';
-                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your secret key in platron. %sClick here to configure!%s' , 'jigoplatron' ), '<a href="' . get_admin_url() . 'admin.php?page=jigoshop_settings&tab=расчет">', '</a>' ) . '</p>';
+                $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your secret key in paybox. %sClick here to configure!%s' , 'jigopaybox' ), '<a href="' . get_admin_url() . 'admin.php?page=jigoshop_settings&tab=расчет">', '</a>' ) . '</p>';
             $message .= '</div>';
 
             echo $message;
         }
 
-		public function platron_callback(){
+		public function paybox_callback(){
 			if(!empty($_POST))
 				$arrRequest = $_POST;
 			else
@@ -415,12 +415,12 @@ function jigoplatron_gateway_load() {
 						if ($arrRequest['pg_result'] == 1){
 							// Обновить статус
 							$objOrder->payment_complete();
-//							$objOrder->update_status('completed', 'Platron transaction id '.$arrRequest['pg_transaction_id']);
+//							$objOrder->update_status('completed', 'Paybox transaction id '.$arrRequest['pg_transaction_id']);
 						}
 						else{
 							// Обновить статус
-//							$objOrder->cancel_order('Platron transaction id '.$arrRequest['pg_transaction_id'].' failure description: '.$arrRequest['pg_failure_description']);
-							$objOrder->update_status('failed', 'Platron transaction id '.$arrRequest['pg_transaction_id'].' failure description: '.$arrRequest['pg_failure_description']);
+//							$objOrder->cancel_order('Paybox transaction id '.$arrRequest['pg_transaction_id'].' failure description: '.$arrRequest['pg_failure_description']);
+							$objOrder->update_status('failed', 'Paybox transaction id '.$arrRequest['pg_transaction_id'].' failure description: '.$arrRequest['pg_failure_description']);
 						}
 					}
 
@@ -446,5 +446,5 @@ function jigoplatron_gateway_load() {
 			die();
 		}
 
-    } // class platron_Gateway.
-} // function jigoplatron_gateway_load.
+    } // class paybox_Gateway.
+} // function jigopaybox_gateway_load.
